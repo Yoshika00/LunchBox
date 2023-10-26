@@ -9,7 +9,7 @@ import { filterData } from "./utils/helper"
 
 const Body = () => {
     
-    const [allRestaurants, setAllRestaurants] = useState(null);
+    const [allRestaurants, setAllRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [filteredRestaurants, setFilteredRestaurants] =useState([]);
     const [errorMessage, setErrorMessage] = useState("");
@@ -25,8 +25,8 @@ const Body = () => {
       try {
         const data = await fetch(`https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.2513844&lng=81.62964130000002`);
         const json = await data.json();
-      
-  
+        const dummydata = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.7272832&lng=77.3370089&restaurantId=229")
+        console.log(await dummydata.json());
         async function checkJsonData(jsonData) {
           for (let i = 0; i < jsonData?.data?.cards.length; i++) {
   

@@ -10,17 +10,18 @@ const RestaurantMenu = () => {
     const { resId } = useParams();
 
     const restaurant = useRestaurantMenu(resId)
-
-    if(restaurant === null) return <ShimmerUi />
     console.log(restaurant);
+    if(restaurant === null) return <ShimmerUi />
+    
 
     const {name,areaName,cuisines,cloudinaryImageId, totalRatingsString, sla} = restaurant?.cards[0]?.card?.card?.info;
 
     const categories =  restaurant?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter( 
     c => c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
-   console.log("before");
-   console.log(categories);
-   console.log("after");
+  // console.log("before");
+   //console.log(categories);
+   //console.log("after");
+   //console.log(restaurant?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
    
     return (
          <div >
@@ -40,7 +41,9 @@ const RestaurantMenu = () => {
                {/* Categories Accordions */}
 
                { 
-               categories.map( category => <RestaurantCategory data={category?.card?.card} key={category?.card?.card?.title}/> )
+               categories===null ? <ShimmerUi /> :
+               categories.map( category => (
+               <RestaurantCategory data={category?.card?.card} key={category?.card?.card?.title}/>) )
                }
             </div>
     )
