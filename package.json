@@ -1,0 +1,36 @@
+{
+  "name": "lunchbox",
+  "version": "1.0.0",
+  "description": "A food ordering website",
+  "main": "app.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yoshika00/LunchBox.git"
+  },
+  "author": "Laxmi Dhiwar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yoshika00/LunchBox/issues"
+  },
+  "homepage": "https://github.com/Yoshika00/LunchBox#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "postcss": "^8.4.38",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.4.3"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.1.0",
+    "react-router-dom": "^6.22.3"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ]
+}
