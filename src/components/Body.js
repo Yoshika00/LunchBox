@@ -57,7 +57,8 @@ const Body = () => {
         <div className="">
             <div className="flex justify-center">
                 <input 
-                   className="border w-1/3  my-4 shadow-md rounded-sm border-collapse p-2  placeholder:text-slate-500 selection:border-green-500 enabled:hover:border-green-600 placeholder-shown:border-gray-500 focus:border-green-700"
+                   className="border w-1/3  my-4 shadow-md rounded-sm p-2 focus:border-blue-500
+                   disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 "
                    type="text" 
                    placeholder="Search for Restaurants...."
                    value={searchText}
