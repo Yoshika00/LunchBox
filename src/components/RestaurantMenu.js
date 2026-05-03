@@ -12,27 +12,36 @@ const RestaurantMenu = () => {
     const restInfo = useRestaurantMenu(resId);
 
     
-    if (restInfo === null) return <ShimmerUI />
+    if (!restInfo) return <ShimmerUI />
 
-    const {name, cuisines, areaName, totalRatingsString, cloudinaryImageId,sla } =  restInfo.cards[2]?.card?.card?.info;
+    const info = restInfo?.cards[2]?.card?.card?.info;
 
+    if (!info) return <ShimmerUI />;
 
-    const categories = restInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-      (c) => c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-    )
+    const { name, cuisines, areaName, totalRatingsString, cloudinaryImageId, sla } = info;
+
+    
     //console.log(restInfo);
+    const categories = restInfo?.cards
+               ?.find(card => card.groupedCard)
+               ?.groupedCard?.cardGroupMap?.REGULAR?.cards
+               ?.filter((c) => c.card?.card?.["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
 
 
     return ( 
-        <div className="text-center pt-4">
-           
+        
+        <div>
 
-                  <div className="  flex justify-center gap-x-4 font-sans  bg-gradient-to-b from-green-600 to-green-50  mx-auto text-black w-[100%] p-3 shadow-md">
+                  <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-4 sm:gap-x-6 bg-gradient-to-b from-green-600 to-green-50 text-black w-full p-3 sm:p-5 shadow-md">
                       
-                          <img className="h-[130px] w-auto rounded-md" src={ CDN_IMG + cloudinaryImageId} />
+                          <img className="h-[100px] sm:h-[130px] w-auto rounded-md" 
+                               src={ CDN_IMG + cloudinaryImageId} />
+
                           <div className="">
-                              <h1 className="font-bold  text-2xl ">{name}</h1>
-                              <p className="text-xs">Cuisines : {cuisines.join(", ")}</p>
+                              <h1 className="font-bold text-lg sm:text-2xl">{name}</h1>
+                              <p className="text-xs sm:text-sm">Cuisines : {cuisines.join(", ")}</p>
                               <div className="text-md mt-6 font-bold">
                                   <p>{areaName}, {sla?.slaString}</p>
                                   <p>Ratings : {totalRatingsString}</p>
@@ -40,9 +49,9 @@ const RestaurantMenu = () => {
                             </div>
                    </div>  
            
-           {/* Categories accordion */}
+           {/* Categories accordion */},
 
-           { categories === null ? <ShimmerUI /> :
+           { !categories ? <ShimmerUI /> :
            categories.map((category) => (
             <RestaurantCategory 
                 data={category?.card?.card} 
@@ -50,8 +59,9 @@ const RestaurantMenu = () => {
                  />
            ))}
            
+        </div>
 
-        </div>)
+        )
     
 }
 

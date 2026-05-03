@@ -3,6 +3,7 @@ import RestaurantCard from "./RestaurantCard";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { FaSearch } from "react-icons/fa";
+import { RESTAURANT_API } from "../utils/constant";
 
  
 const Body = () => {
@@ -21,17 +22,24 @@ const Body = () => {
 
     useEffect( () => {
         fetchData()
-    },[])
+    },[]);
 
-    const fetchData =  async () => {
-       const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.2513844&lng=81.62964130000002")
+    const fetchData = async () => {
+       const data = await fetch(RESTAURANT_API);
        const json = await data.json();
-       
-       setListOfRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-       setFilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-    }
 
-    
+       const restaurants =
+          json?.data?.cards
+          ?.find(
+         (card) =>
+          card?.card?.card?.gridElements?.infoWithStyle?.restaurants
+         )
+        ?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
+
+     setListOfRestaurant(restaurants);
+     setFilteredRestaurant(restaurants);
+    };
+
     const searchData = (searchText, listOfRestaurant) => {
         if (searchText !== "") {
           const filteredData = filterData(searchText, listOfRestaurant);
@@ -51,22 +59,33 @@ const Body = () => {
     //console.log(listOfRestaurant);
 
     const onlineStatus = useOnlineStatus();
-    if(onlineStatus === false) return <h1>Looks like you are offline...!!! Check your internet connection 🙏</h1>
+    
+
+    if (!onlineStatus) {
+       return (
+         <div className="flex justify-center items-center h-screen bg-gray-100 ">
+             <h1 className="text-xl font-semibold text-red-500 text-center">
+               🚫 You are offline. Please check your internet connection 🙏.
+             </h1>
+         </div>
+       );
+    }
 
     return (
-        <div className="">
-            <div className="flex justify-center">
+        <div className="bg-gray-100 min-h-screen">
+            <div className="flex flex-col sm:flex-row justify-center p-2">
                 <input 
-                   className="border w-1/3  my-4 shadow-md rounded-sm p-2 focus:border-blue-500
-                   disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 "
+                   className="border w-full sm:w-1/2 p-3 rounded-lg shadow-md dark:bg-gray-800 dark:text-white"
                    type="text" 
-                   placeholder="Search for Restaurants...."
+                   placeholder="Search Restaurants...."
                    value={searchText}
                    onChange={(e) => {
                     setSearchText(e.target.value)
                     searchData(e.target.value, listOfRestaurant) }}>
                 </input>
-                <button className="border border-solid text-white p-3  my-3 rounded-sm bg-green-600" ><FaSearch /></button>
+
+                
+               
 
                 {/*<button 
                    onClick={() => {
@@ -89,15 +108,19 @@ const Body = () => {
             
 
             <div className="flex flex-wrap justify-center gap-4 p-4 w-10/12 m-auto">
-                {filteredRestaurant.map((restaurant) => (
-                    <Link key={restaurant?.info?.id} to={"/restaurants/" + restaurant?.info?.id}>
-                       <RestaurantCard  {...restaurant?.info} />
+                {filteredRestaurant?.map((restaurant) => (
+                    <Link 
+                          key={restaurant?.info?.id} 
+                          to={"/restaurants/" + restaurant?.info?.id} >
+
+                          <RestaurantCard  {...restaurant?.info} />
                     </Link>
-                ))}
+                ))
+                }
                 
             </div>
         </div>
-    )
-}
+      );
+  };
 
 export default Body;

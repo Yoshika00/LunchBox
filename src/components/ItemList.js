@@ -1,34 +1,64 @@
+import { addItem } from "../utils/cartSlice";
 import { CDN_IMG } from "../utils/constant";
+import { useDispatch } from "react-redux";
 
-const ItemList = ({items}) => {
-    //console.log(items);
-    return (
-        <div>
-            {items.map((item) => (
-                <div key={item.card.info.id}
-                     className="p-4 m-4 border-gray-200 border-b-2 text-left flex justify-between">
+const ItemList = ({ items }) => {
 
-                    <div className="w-9/12">
-                       <div className="font-semibold">
-                           <span>{item?.card?.info?.name}</span>
-                           <span> - ₹{item.card.info.price ? item.card?.info?.price /100 : item?.card?.info?.defaultPrice / 100}</span>
-                       </div>
+  const dispatch = useDispatch();
 
-                       <p className="text-xs">{item.card.info.description}</p>
-                    </div>
+  const handleAddItem = (item) => {
+      //dispatch an action
+      dispatch(addItem(item));
+     };
 
-                    <div className="w-3/12 p-4">
-                        <div className="absolute">
-                             <button className="p-1 px-4 mx-6 my-20 rounded-lg bg-white text-green-600 font-bold shadow-lg">Add +</button>
-                        </div>
-                        <img src={CDN_IMG + item.card.info.imageId} className="w-full rounded-md" />
-                    </div>
-                </div>
-                 
-            ))}
-        </div>
-    )
-}
+  return (
+    <div>
+      {items.map((item) => {
+        const info = item?.card?.info;
+
+        return (
+          <div
+            key={info?.id}
+            className="p-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between gap-4"
+          >
+
+            {/* Left section */}
+            <div className="sm:w-9/12">
+              <div className="font-semibold text-sm sm:text-base">
+                <span>{info?.name}</span>
+                <span className="ml-2">
+                  - ₹
+                  {info?.price ? info.price / 100 : info?.defaultPrice / 100}
+                </span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 line-clamp-2">
+                {info?.description}
+              </p>
+            </div>
+
+            {/* Right section */}
+            <div className="sm:w-3/12 flex flex-col items-center sm:items-end relative">
+              
+              <img
+                src={CDN_IMG + info?.imageId}
+                className="w-full sm:w-[120px] rounded-md"
+              />
+
+              <button className="mt-2 sm:absolute sm:bottom-2 sm:right-2 bg-white text-green-600 font-bold px-4 py-1 rounded-lg shadow-md"
+                      onClick={() => handleAddItem(item)}>
+                Add +
+              </button>
+
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+
     
 
 export default ItemList;

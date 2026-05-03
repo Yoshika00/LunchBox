@@ -6,24 +6,35 @@ const RestaurantCard = ( {name, cuisines, cloudinaryImageId, avgRating, areaName
 
     
     return (
-        <div className="p-2 m-2  w-[220px] border shadow-xl rounded-lg gap-1 bg-gray-200 hover:scale-105  overflow-hidden">
+        <div className="p-3 w-full sm:w-[280px] md:w-[300px] border shadow-xl rounded-xl gap-2 bg-white dark:bg-gray-500 dark:text-white hover:scale-105 duration-300 overflow-hidden">
        
-          <img className="h-[130px] w-[230px] rounded-lg" src={CDN_IMG + cloudinaryImageId} />
-          <div className="font-bold text-lg font-sans">{name}</div>
+          <img 
+              className="h-[180px] w-full object-cover rounded-lg" 
+              src={CDN_IMG + cloudinaryImageId} 
+              alt={name} 
+          />
+          <div className="font-bold text-lg">{name}</div>
           
-          <div className="py-0.5 text-xs"> { cuisines.join(" ,")} </div>
-          <div className="font-bold text-xs font-sans">{areaName}</div>
-          <span className="flex mt-5 justify-around text-black" >
-            <span className="bg-green-500 flex justify-center gap-1 text-white rounded-lg p-1 text-sm">
-              <span className="pt-1"><FaStar /></span>
-              <span>{avgRating}</span>
+          <div className="text-sm text-gray-600 dark:text-gray-300"> 
+              { cuisines.join(" ,").length > 35 ? 
+               (cuisines.join(",").substr(0,35)) + "..." : 
+               cuisines.join(",")} 
+          </div>
+
+          <div className="font-semibold text-sm font-sans">{areaName}</div>
+          
+          <div className="flex mt-5 justify-around text-black" >
+
+            <span className="bg-green-500 flex items-center gap-1 text-white rounded-lg px-2 py-1">
+               <FaStar />
+               {avgRating}
             </span> 
             
-            <h4 className="text-xl font-bold">|</h4>
-            <h4 className="text-sm pt-1">{sla?.lastMileTravelString}</h4>
-            <h4 className="text-xl font-bold">|</h4>
-            <h4 className="text-sm pt-1">{costForTwo}</h4>
-          </span>
+            <span className="text-xl font-bold">|</span>
+            <span>{sla?.lastMileTravelString}</span>
+            <span className="text-xl font-bold">|</span>
+            <span>{costForTwo}</span>
+          </div>
           
           
         </div>

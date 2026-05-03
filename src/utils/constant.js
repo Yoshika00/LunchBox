@@ -2,9 +2,9 @@ export const LOGO_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCE
 
 export const CDN_IMG = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
 
-export const MENU_API = "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=21.2513844&lng=81.62964130000002&restaurantId=";
+export const MENU_API = "https://corsproxy.io/?https://www.swiggy.com/mapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=17.4698&lng=78.3854&restaurantId=";
 
-export const RESTAURANT_API = "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.2513844&lng=81.62964130000002";
 
+export const RESTAURANT_API = "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4698&lng=78.3854"
 
 

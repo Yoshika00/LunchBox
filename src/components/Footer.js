@@ -2,15 +2,18 @@ import { FaRegCopyright } from "react-icons/fa";
 
 const Footer = () => {
     return (
-      <div className="border p-3 mx-4 m-2 flex justify-center bottom-0 items-center shadow-2xl font-sans font-bold  text-center w-[98%] ">
-        Created By Laxmi Dhiwar ❤️
-          <span className="text-xl font-extrabold"> Lunch</span> 
-          <span className="text-xl text-green-500 font-extrabold">Box</span>
-          <span className="ml-2" > < FaRegCopyright />  </span>
-          <span className="font-bold ml-1">2024</span>
-          
-      </div>
+     
+
+      <div className="p-4 text-center font-bold shadow-lg sticky bg-white dark:bg-gray-800 dark:text-white">
+      Created By Laxmi Dhiwar ❤️ 
+      <span className="text-xl font-extrabold"> Lunch</span> 
+      <span className="text-xl text-green-500 font-extrabold">Box</span>
+       <FaRegCopyright className="inline ml-2" /> 2026
+    </div>
     );
   };
   
   export default Footer;
+
+
+ 
